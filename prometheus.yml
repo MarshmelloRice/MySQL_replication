@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+      
+  - job_name: 'mysql'
+    params:
+      auth_module: [client]
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ['mysql-exporter-master:9104']
+        labels:
+          group: 'master'
+      - targets: ['mysql-exporter-slave1:9104']
+        labels:
+          group: 'slave'
+      - targets: ['mysql-exporter-slave2:9104']
+        labels:
+          group: 'slave'
